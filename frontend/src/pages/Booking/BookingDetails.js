@@ -22,9 +22,44 @@ const BookingDetails = () => {
   const [chatMessage, setChatMessage] = useState('');
   const [sendingMessage, setSendingMessage] = useState(false);
 
+  const fetchBookingDetails = useCallback(async () => {
+    try {
+      setLoading(true);
+      const response = await bookingsAPI.getBooking(id);
+      if (response.data.success) {
+        setBooking(response.data.booking);
+        // If booking is active, fetch tracking data
+        if (['accepted', 'in_progress'].includes(response.data.booking.status)) {
+          fetchTrackingHistory();
+        }
+      }
+    } catch (error) {
+      setError(error.response?.data?.message || 'Failed to load booking details');
+      toast.error('Failed to load booking details');
+    } finally {
+      setLoading(false);
+    }
+  }, [id]);
+
+  const fetchTrackingHistory = useCallback(async () => {
+    try {
+      const response = await trackingAPI.getTrackingHistory(id);
+      if (response.data.success) {
+        const history = response.data.tracking.history || [];
+        setTrackingHistory(history);
+        if (history.length > 0) {
+          setExpertLocation(history[history.length - 1]);
+        }
+        setEta(response.data.tracking.estimatedArrival);
+      }
+    } catch (error) {
+      console.error('Failed to fetch tracking history:', error);
+    }
+  }, [id]);
+
   useEffect(() => {
     fetchBookingDetails();
-  }, [id]);
+  }, [fetchBookingDetails]);
 
   useEffect(() => {
     if (socket && booking) {
@@ -57,41 +92,6 @@ const BookingDetails = () => {
       };
     }
   }, [socket, booking, fetchBookingDetails, fetchTrackingHistory]);
-
-  const fetchBookingDetails = async () => {
-    try {
-      setLoading(true);
-      const response = await bookingsAPI.getBooking(id);
-      if (response.data.success) {
-        setBooking(response.data.booking);
-        // If booking is active, fetch tracking data
-        if (['accepted', 'in_progress'].includes(response.data.booking.status)) {
-          fetchTrackingHistory();
-        }
-      }
-    } catch (error) {
-      setError(error.response?.data?.message || 'Failed to load booking details');
-      toast.error('Failed to load booking details');
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const fetchTrackingHistory = async () => {
-    try {
-      const response = await trackingAPI.getTrackingHistory(id);
-      if (response.data.success) {
-        const history = response.data.tracking.history || [];
-        setTrackingHistory(history);
-        if (history.length > 0) {
-          setExpertLocation(history[history.length - 1]);
-        }
-        setEta(response.data.tracking.estimatedArrival);
-      }
-    } catch (error) {
-      console.error('Failed to fetch tracking history:', error);
-    }
-  };
 
   const handleSendMessage = async () => {
     if (!chatMessage.trim()) return;
