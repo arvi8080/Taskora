@@ -1,0 +1,101 @@
+# =====================================================
+# FRONTEND .GITIGNORE
+# Comprehensive ignore patterns for React/Node.js frontend
+# =====================================================
+
+# -------------------- Dependencies --------------------
+node_modules/
+
+# -------------------- Build Outputs --------------------
+build/
+dist/
+out/
+
+# -------------------- Environment Variables --------------------
+.env
+.env.local
+.env.development
+.env.production
+.env.test
+.env.*.local
+
+# -------------------- Package Manager Files --------------------
+# Lock files - uncomment if you want to commit lock files
+# package-lock.json
+# yarn.lock
+# pnpm-lock.yaml
+
+# -------------------- Testing and Coverage --------------------
+coverage/
+.nyc_output/
+*.coverage
+*.coverage.*
+
+# -------------------- Cache Files --------------------
+.cache/
+.parcel-cache/
+.eslintcache
+.sass-cache/
+.yarn-integrity
+.webpack/
+
+# -------------------- IDE and Editor --------------------
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.vscode
+!.vscode/extensions.json
+!.vscode/settings.json
+
+# -------------------- OS Files --------------------
+.DS_Store
+Thumbs.db
+ehthumbs.db
+desktop.ini
+
+# -------------------- Logs --------------------
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# -------------------- Misc --------------------
+*.pem
+*.key
+*.sig
+*.orig
+*_backup
+*_backup.*
+
+# -------------------- React/Next.js Specific --------------------
+.react-load/
+.next/
+.nuxt/
+.output/
+.vercel/
+.netlify/
+
+# -------------------- TypeScript (if used) --------------------
+*.tsbuildinfo
+
+# -------------------- Storybook (if used) --------------------
+storybook-static/
+
+# -------------------- Cypress (if used) --------------------
+cypress/videos/
+cypress/screenshots/
+cypress/downloads/
+
+# -------------------- Jest (if used) --------------------
+jest/
+
+# -------------------- Debug --------------------
+*.debug
+tmp/
+temp/
+*.tmp

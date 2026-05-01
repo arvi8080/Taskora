@@ -1,0 +1,41 @@
+# Render Blueprint Configuration for ExpertService Backend
+# NOTE: This project uses MongoDB, so we use MongoDB Atlas (free tier) for the database
+# Render doesn't offer MongoDB, so we connect to MongoDB Atlas
+
+services:
+  - type: web
+    name: expert-service-backend
+    env: node
+    region: oregon
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+      - key: MONGODB_URI
+        # IMPORTANT: Set this in Render dashboard to your MongoDB Atlas connection string
+        # Format: mongodb+srv://<username>:<password>@cluster.mongodb.net/expertservice?retryWrites=true&w=majority
+        # Example: mongodb+srv://myuser:mypassword@mycluster.mongodb.net/expertservice?retryWrites=true&w=majority
+        sync: false
+      - key: JWT_SECRET
+        generateValue: true
+      - key: JWT_EXPIRE
+        value: 7d
+      - key: FRONTEND_URL
+        # Replace with your Vercel frontend URL after deployment
+        # e.g., https://your-project.vercel.app
+        value: https://your-app.vercel.app
+      # Add other env vars from env.example as needed:
+      # - OPENAI_API_KEY
+      # - TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN, TWILIO_PHONE_NUMBER
+      # - STRIPE_SECRET_KEY, STRIPE_WEBHOOK_SECRET
+      # - AGORA_APP_ID, AGORA_APP_CERTIFICATE
+      # - GOOGLE_MAPS_API_KEY
+      # - SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASS
+
+# NOTE: For database, use MongoDB Atlas (free tier):
+# 1. Go to https://www.mongodb.com/cloud/atlas
+# 2. Create a free cluster
+# 3. Get the connection string and add it to MONGODB_URI in Render dashboard

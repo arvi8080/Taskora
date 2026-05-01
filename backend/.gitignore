@@ -1,0 +1,92 @@
+# =====================================================
+# BACKEND .GITIGNORE
+# Comprehensive ignore patterns for Node.js backend
+# =====================================================
+
+# -------------------- Dependencies --------------------
+# Managed by npm/yarn at project root
+node_modules/
+
+# -------------------- Build Outputs --------------------
+# If using TypeScript or compiled JS
+dist/
+build/
+*.js.map
+
+# -------------------- Environment Variables --------------------
+# Never commit actual env files (keep env.example for reference)
+.env
+.env.local
+.env.development
+.env.production
+.env.test
+.env.*
+# Secrets should never be committed
+*.secret
+*.key
+
+# -------------------- Package Manager Files --------------------
+# Lock files - uncomment if you want to commit lock files
+# package-lock.json
+# yarn.lock
+# pnpm-lock.yaml
+
+# -------------------- Logs --------------------
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# -------------------- IDE and Editor --------------------
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+!.vscode/extensions.json
+!.vscode/settings.json
+
+# -------------------- OS Files --------------------
+Thumbs.db
+ehthumbs.db
+.DS_Store
+desktop.ini
+
+# -------------------- Testing --------------------
+coverage/
+.nyc_output/
+*.coverage
+*.coverage.*
+
+# -------------------- Cache --------------------
+.cache/
+.parcel-cache/
+.npm/
+.eslintcache
+
+# -------------------- Database --------------------
+# Local database files
+*.db
+*.sqlite
+*.sqlite3
+data/
+
+# -------------------- Uploads --------------------
+# File uploads directory
+uploads/
+*.upload
+
+# -------------------- Debug --------------------
+# Debug files
+*.debug
+
+# -------------------- Misc --------------------
+*.orig
+*_backup
+*_backup.*
+tmp/
+temp/
+*.tmp
+*.pid
