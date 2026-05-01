@@ -132,6 +132,21 @@ app.use('*', (req, res) => {
   });
 });
 
+// Root route for health check
+app.get('/', (req, res) => {
+  res.json({ 
+    message: 'Taskora API Running 🚀',
+    version: '1.0.0',
+    status: 'OK',
+    timestamp: new Date().toISOString()
+  });
+});
+
+// Root route for health check (alternative)
+app.get('/health', (req, res) => {
+  res.json({ status: 'OK' });
+});
+
 const PORT = process.env.PORT || 5000;
 server.listen(PORT, () => {
   console.log(`🚀 Server running on port ${PORT}`);
