@@ -68,6 +68,21 @@ app.use('/api/emergency', require('./routes/emergency'));
 app.use('/api/community', require('./routes/community'));
 app.use('/api/warranty', require('./routes/warranty'));
 
+// Root route for health check (MUST be before 404 handler)
+app.get('/', (req, res) => {
+  res.json({ 
+    message: 'Taskora API Running 🚀',
+    version: '1.0.0',
+    status: 'OK',
+    timestamp: new Date().toISOString()
+  });
+});
+
+// Root route for health check (alternative)
+app.get('/health', (req, res) => {
+  res.json({ status: 'OK' });
+});
+
 // Socket.io for real-time features
 io.on('connection', (socket) => {
   console.log('🔌 User connected:', socket.id);
@@ -130,21 +145,6 @@ app.use('*', (req, res) => {
     success: false,
     message: 'Route not found'
   });
-});
-
-// Root route for health check
-app.get('/', (req, res) => {
-  res.json({ 
-    message: 'Taskora API Running 🚀',
-    version: '1.0.0',
-    status: 'OK',
-    timestamp: new Date().toISOString()
-  });
-});
-
-// Root route for health check (alternative)
-app.get('/health', (req, res) => {
-  res.json({ status: 'OK' });
 });
 
 const PORT = process.env.PORT || 5000;
