@@ -21,10 +21,5 @@
       "dest": "/index.html"
     }
   ],
-  "env": {
-    "REACT_APP_API_URL": "https://taskora-d5hq.onrender.com/api",
-    "REACT_APP_SERVER_URL": "https://taskora-d5hq.onrender.com"
-  },
-  "regions": ["iad1"],
   "installCommand": "npm install --legacy-peer-deps"
 }
