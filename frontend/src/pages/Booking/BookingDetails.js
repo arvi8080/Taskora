@@ -22,7 +22,7 @@ const BookingDetails = () => {
   const [chatMessage, setChatMessage] = useState('');
   const [sendingMessage, setSendingMessage] = useState(false);
 
-  const fetchBookingDetails = useCallback(async () => {
+const fetchBookingDetails = useCallback(async () => {
     try {
       setLoading(true);
       const response = await bookingsAPI.getBooking(id);
@@ -30,7 +30,7 @@ const BookingDetails = () => {
         setBooking(response.data.booking);
         // If booking is active, fetch tracking data
         if (['accepted', 'in_progress'].includes(response.data.booking.status)) {
-          fetchTrackingHistory();
+          // fetchTrackingHistory will be called in useEffect
         }
       }
     } catch (error) {
@@ -57,9 +57,15 @@ const BookingDetails = () => {
     }
   }, [id]);
 
-  useEffect(() => {
+useEffect(() => {
     fetchBookingDetails();
   }, [fetchBookingDetails]);
+
+useEffect(() => {
+    if (booking && ['accepted', 'in_progress'].includes(booking.status)) {
+      fetchTrackingHistory();
+    }
+  }, [booking, fetchTrackingHistory]);
 
   useEffect(() => {
     if (socket && booking) {
