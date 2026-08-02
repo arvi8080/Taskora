@@ -93,10 +93,8 @@ const HowItWorks = () => {
                     </div>
                     
                     {/* Icon */}
-                    <div className="absolute -top-2 -right-2 w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-md">
-                      <div className={`text-gray-600`}>
-                        {step.icon}
-                      </div>
+                    <div className="absolute -top-2 -right-2 w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-md text-gray-700">
+                      {React.cloneElement(step.icon, { className: 'w-4 h-4 text-gray-700' })}
                     </div>
                   </div>
 

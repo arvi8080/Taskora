@@ -1,12 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 
 const Pricing = () => {
+  const [isYearly, setIsYearly] = useState(false);
+
   const plans = [
     {
       name: 'Free',
       price: 0,
+      yearlyPrice: 0,
       period: 'forever',
       description: 'Perfect for occasional service needs',
       features: [
@@ -28,6 +31,7 @@ const Pricing = () => {
     {
       name: 'Basic',
       price: 299,
+      yearlyPrice: 239,
       period: 'month',
       description: 'Great for regular service needs',
       features: [
@@ -49,6 +53,7 @@ const Pricing = () => {
     {
       name: 'Premium',
       price: 599,
+      yearlyPrice: 479,
       period: 'month',
       description: 'Best for frequent users',
       features: [
@@ -72,6 +77,7 @@ const Pricing = () => {
     {
       name: 'Enterprise',
       price: 999,
+      yearlyPrice: 799,
       period: 'month',
       description: 'For businesses and organizations',
       features: [
@@ -100,7 +106,7 @@ const Pricing = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <motion.div
-          className="text-center mb-16"
+          className="text-center mb-12"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
@@ -109,10 +115,37 @@ const Pricing = () => {
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
             Choose Your Plan
           </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+          <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-8">
             Start free and upgrade as you need more features. All plans include 
             access to our verified experts and quality service guarantee.
           </p>
+
+          {/* Billing Cycle Toggle */}
+          <div className="flex items-center justify-center gap-3">
+            <span className={`text-sm font-medium ${!isYearly ? 'text-gray-900 font-bold' : 'text-gray-500'}`}>
+              Monthly Billing
+            </span>
+            <button
+              onClick={() => setIsYearly(!isYearly)}
+              className={`relative inline-flex h-7 w-14 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none ${
+                isYearly ? 'bg-primary-600' : 'bg-gray-300'
+              }`}
+              role="switch"
+              aria-checked={isYearly}
+            >
+              <span
+                className={`pointer-events-none inline-block h-6 w-6 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out ${
+                  isYearly ? 'translate-x-7' : 'translate-x-0'
+                }`}
+              />
+            </button>
+            <span className={`text-sm font-medium flex items-center gap-1.5 ${isYearly ? 'text-gray-900 font-bold' : 'text-gray-500'}`}>
+              Annual Billing
+              <span className="bg-green-100 text-green-800 text-xs px-2 py-0.5 rounded-full font-semibold">
+                Save 20%
+              </span>
+            </span>
+          </div>
         </motion.div>
 
         {/* Pricing Cards */}
@@ -141,9 +174,9 @@ const Pricing = () => {
                 <h3 className="text-xl font-bold text-gray-900 mb-2">{plan.name}</h3>
                 <div className="mb-2">
                   <span className={`text-4xl font-bold bg-gradient-to-r ${plan.color} bg-clip-text text-transparent`}>
-                    ₹{plan.price}
+                    ₹{isYearly ? plan.yearlyPrice : plan.price}
                   </span>
-                  <span className="text-gray-600">/{plan.period}</span>
+                  <span className="text-gray-600">/{plan.price === 0 ? 'forever' : isYearly ? 'mo (billed yearly)' : 'month'}</span>
                 </div>
                 <p className="text-gray-600 text-sm">{plan.description}</p>
               </div>

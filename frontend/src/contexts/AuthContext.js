@@ -2,6 +2,10 @@ import React, { createContext, useContext, useReducer, useEffect } from 'react';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 
+if (process.env.REACT_APP_API_URL) {
+  axios.defaults.baseURL = process.env.REACT_APP_API_URL.replace(/\/api\/?$/, '');
+}
+
 const AuthContext = createContext();
 
 const initialState = {

@@ -1,7 +1,20 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Hero = ({ onEmergency, onVoiceSearch, onAIChat }) => {
+  const navigate = useNavigate();
+  const [searchQuery, setSearchQuery] = useState('');
+
+  const handleSearchSubmit = (e) => {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      navigate(`/experts?search=${encodeURIComponent(searchQuery.trim())}`);
+    } else {
+      navigate('/experts');
+    }
+  };
+
   return (
     <section className="relative bg-gradient-to-br from-blue-900 via-purple-900 to-indigo-900 text-white overflow-hidden">
       {/* Background Pattern */}
@@ -13,28 +26,69 @@ const Hero = ({ onEmergency, onVoiceSearch, onAIChat }) => {
 
       {/* Main Content */}
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+        {/* Top Badge */}
+        <motion.div
+          className="flex justify-center mb-6"
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+        >
+          <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-xs sm:text-sm font-medium text-blue-200 shadow-inner">
+            <span className="w-2 h-2 rounded-full bg-green-400 animate-ping"></span>
+            #1 AI-Powered Expert Service Platform in India
+          </span>
+        </motion.div>
+
         {/* Hero Text */}
         <motion.div
-          className="text-center mb-16"
+          className="text-center mb-12"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
         >
-          <h1 className="text-4xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-white to-blue-200 bg-clip-text text-transparent">
+          <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold mb-6 bg-gradient-to-r from-white via-blue-100 to-blue-200 bg-clip-text text-transparent leading-tight">
             Expert Help, 
             <br />
-            <span className="bg-gradient-to-r from-yellow-300 to-orange-400 bg-clip-text text-transparent">AI Fast</span>
+            <span className="bg-gradient-to-r from-yellow-300 via-amber-400 to-orange-400 bg-clip-text text-transparent">AI Fast</span>
           </h1>
-          <p className="text-xl md:text-2xl text-blue-100 max-w-3xl mx-auto mb-8 leading-relaxed">
+          <p className="text-lg sm:text-xl md:text-2xl text-blue-100 max-w-3xl mx-auto mb-8 leading-relaxed font-light">
             Get verified experts for any home service. AI-powered matching, real-time tracking, 
-            and instant booking. From plumbing to electrical - we've got you covered 24/7.
+            and instant booking. From plumbing to electrical — we've got you covered 24/7.
           </p>
 
+          {/* Quick Search Bar */}
+          <motion.form 
+            onSubmit={handleSearchSubmit}
+            className="max-w-2xl mx-auto mb-10"
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.3, duration: 0.5 }}
+          >
+            <div className="relative flex items-center bg-white/15 backdrop-blur-md border border-white/30 rounded-2xl p-2 shadow-2xl focus-within:border-blue-400 transition-all">
+              <svg className="w-6 h-6 text-blue-200 ml-3 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+              </svg>
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Search service e.g. Plumber, Electrician, AC Repair..."
+                className="w-full bg-transparent text-white placeholder-blue-200/70 px-2 py-3 focus:outline-none text-base sm:text-lg"
+              />
+              <button
+                type="submit"
+                className="bg-blue-600 hover:bg-blue-500 text-white px-6 py-3 rounded-xl font-semibold text-base transition-colors shrink-0 shadow-md"
+              >
+                Search
+              </button>
+            </div>
+          </motion.form>
+
           {/* Main CTA Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
+          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-10">
             <motion.button
               onClick={onAIChat}
-              className="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white px-8 py-4 rounded-xl font-semibold text-lg shadow-xl hover:shadow-2xl transform hover:-translate-y-1 transition-all duration-300 flex items-center gap-2"
+              className="w-full sm:w-auto bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white px-8 py-4 rounded-xl font-semibold text-lg shadow-xl hover:shadow-2xl transform hover:-translate-y-1 transition-all duration-300 flex items-center justify-center gap-2"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
@@ -46,7 +100,7 @@ const Hero = ({ onEmergency, onVoiceSearch, onAIChat }) => {
 
             <motion.button
               onClick={onVoiceSearch}
-              className="bg-white/10 backdrop-blur-sm hover:bg-white/20 text-white px-8 py-4 rounded-xl font-semibold text-lg border border-white/20 hover:border-white/40 transition-all duration-300 flex items-center gap-2"
+              className="w-full sm:w-auto bg-white/10 backdrop-blur-sm hover:bg-white/20 text-white px-8 py-4 rounded-xl font-semibold text-lg border border-white/20 hover:border-white/40 transition-all duration-300 flex items-center justify-center gap-2"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
@@ -83,19 +137,23 @@ const Hero = ({ onEmergency, onVoiceSearch, onAIChat }) => {
           transition={{ delay: 0.8 }}
         >
           {[
-            { icon: '🔧', label: 'Plumbing' },
-            { icon: '⚡', label: 'Electrical' },
-            { icon: '🔨', label: 'Carpentry' },
-            { icon: '🎨', label: 'Painting' },
+            { icon: '🚰', label: 'Plumbing', path: '/plumbing-experts' },
+            { icon: '⚡', label: 'Electrical', path: '/electrical-experts' },
+            { icon: '🔨', label: 'Carpentry', path: '/carpentry-experts' },
+            { icon: '🎨', label: 'Painting', path: '/painting-experts' },
           ].map((service, index) => (
             <motion.div
               key={service.label}
-              className="text-center p-4 bg-white/10 backdrop-blur-sm rounded-xl border border-white/20"
               whileHover={{ scale: 1.05, y: -5 }}
               transition={{ delay: index * 0.1 }}
             >
-              <div className="text-3xl mb-2">{service.icon}</div>
-              <p className="font-medium">{service.label}</p>
+              <Link
+                to={service.path}
+                className="block text-center p-4 bg-white/10 backdrop-blur-sm rounded-xl border border-white/20 hover:bg-white/20 transition-all cursor-pointer"
+              >
+                <div className="text-3xl mb-2">{service.icon}</div>
+                <p className="font-medium text-white">{service.label}</p>
+              </Link>
             </motion.div>
           ))}
         </motion.div>
@@ -107,15 +165,15 @@ const Hero = ({ onEmergency, onVoiceSearch, onAIChat }) => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1 }}
         >
-          <a
-            href="/experts"
+          <Link
+            to="/experts"
             className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm hover:bg-white/20 text-white px-6 py-3 rounded-xl font-semibold border border-white/20 hover:border-white/40 transition-all duration-300"
           >
             View All Services
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
             </svg>
-          </a>
+          </Link>
         </motion.div>
 
         {/* Stats Bar */}
@@ -141,8 +199,8 @@ const Hero = ({ onEmergency, onVoiceSearch, onAIChat }) => {
       </div>
 
       {/* Floating Elements */}
-      <div className="absolute top-20 left-10 w-32 h-32 bg-blue-500/20 rounded-full blur-xl"></div>
-      <div className="absolute bottom-20 right-10 w-48 h-48 bg-purple-500/20 rounded-full blur-xl"></div>
+      <div className="absolute top-20 left-10 w-32 h-32 bg-blue-500/20 rounded-full blur-xl pointer-events-none"></div>
+      <div className="absolute bottom-20 right-10 w-48 h-48 bg-purple-500/20 rounded-full blur-xl pointer-events-none"></div>
     </section>
   );
 };

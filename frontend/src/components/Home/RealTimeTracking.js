@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 
 const RealTimeTracking = () => {
   const [currentStep, setCurrentStep] = useState(0);
@@ -225,9 +226,9 @@ const RealTimeTracking = () => {
               <p className="text-gray-600 mb-4">
                 Book your first service and see real-time tracking in action.
               </p>
-              <button className="btn-primary btn-sm">
+              <Link to="/book-service" className="btn-primary btn-sm inline-block">
                 Book Service Now
-              </button>
+              </Link>
             </div>
           </motion.div>
         </div>
