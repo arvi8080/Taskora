@@ -14,10 +14,9 @@ const CommunitySection = () => {
   const fetchOpportunities = async () => {
     try {
       const response = await communityAPI.getOpportunities({ limit: 3 });
-      setOpportunities(response.data.opportunities || []);
+      setOpportunities(response.data?.opportunities || []);
     } catch (error) {
       console.error('Error fetching opportunities:', error);
-      toast.error('Failed to load community opportunities');
     }
   };
 

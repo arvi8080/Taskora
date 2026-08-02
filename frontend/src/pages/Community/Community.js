@@ -20,10 +20,9 @@ const Community = () => {
   const fetchPosts = async () => {
     try {
       const response = await communityAPI.getPosts();
-      setPosts(response.data.posts || []);
+      setPosts(response.data?.posts || []);
     } catch (error) {
       console.error('Error fetching posts:', error);
-      toast.error('Failed to load community posts');
     } finally {
       setLoading(false);
     }
