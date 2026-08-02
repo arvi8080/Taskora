@@ -12,7 +12,6 @@ import WhyChooseUsSection from '../components/Landing/WhyChooseUsSection';
 import TestimonialsSection from '../components/Landing/TestimonialsSection';
 import MobileAppSection from '../components/Landing/MobileAppSection';
 import FAQSection from '../components/Landing/FAQSection';
-import FooterSection from '../components/Landing/FooterSection';
 import ContactModal from '../components/Landing/ContactModal';
 
 // Floating Modals
@@ -95,9 +94,6 @@ const Home = () => {
         {/* 8. Accordion FAQ Section */}
         <FAQSection />
       </main>
-
-      {/* Footer */}
-      <FooterSection />
 
       {/* Floating Emergency SOS Button */}
       <EmergencyButton onClick={handleEmergency} />
