@@ -3,36 +3,40 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { useSocket } from '../contexts/SocketContext';
 
-// Components
-import Hero from '../components/Home/Hero';
+// SaaS Landing Page Components
+import Navbar from '../components/Landing/Navbar';
+import HeroSection from '../components/Landing/HeroSection';
+import PopularServicesSection from '../components/Landing/PopularServicesSection';
+import HowItWorksSection from '../components/Landing/HowItWorksSection';
+import StatisticsSection from '../components/Landing/StatisticsSection';
+import WhyChooseUsSection from '../components/Landing/WhyChooseUsSection';
+import TestimonialsSection from '../components/Landing/TestimonialsSection';
+import MobileAppSection from '../components/Landing/MobileAppSection';
+import FAQSection from '../components/Landing/FAQSection';
+import FooterSection from '../components/Landing/FooterSection';
+import ContactModal from '../components/Landing/ContactModal';
+
+// Floating Modals
 import AIChatbot from '../components/Home/AIChatbot';
-import ServiceCategories from '../components/Home/ServiceCategories';
-import HowItWorks from '../components/Home/HowItWorks';
-import Features from '../components/Home/Features';
-import Testimonials from '../components/Home/Testimonials';
-import EmergencyButton from '../components/Home/EmergencyButton';
 import VoiceSearch from '../components/Home/VoiceSearch';
-import RealTimeTracking from '../components/Home/RealTimeTracking';
-import Gamification from '../components/Home/Gamification';
-import CommunitySection from '../components/Home/CommunitySection';
-import Pricing from '../components/Home/Pricing';
-import Stats from '../components/Home/Stats';
+import EmergencyButton from '../components/Home/EmergencyButton';
 
 const Home = () => {
   const navigate = useNavigate();
   const { isAuthenticated } = useAuth();
   const { emitEvent } = useSocket();
+
   const [showChatbot, setShowChatbot] = useState(false);
   const [showVoiceSearch, setShowVoiceSearch] = useState(false);
+  const [showContactModal, setShowContactModal] = useState(false);
 
-  // Emergency handler
+  // Emergency Handler
   const handleEmergency = () => {
     if (!isAuthenticated) {
       navigate('/login');
       return;
     }
     
-    // Get user's current location
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
@@ -41,7 +45,6 @@ const Home = () => {
             lng: position.coords.longitude,
           };
           
-          // Emit emergency alert
           emitEvent('emergency-alert', {
             location,
             emergencyType: 'general',
@@ -60,26 +63,50 @@ const Home = () => {
     }
   };
 
-  // Voice search handler
-  const handleVoiceSearch = () => {
-    setShowVoiceSearch(true);
-  };
-
-  // AI chatbot handler
-  const handleAIChat = () => {
-    setShowChatbot(true);
-  };
-
   return (
-    <div className="min-h-screen">
-      {/* Hero Section */}
-      <Hero 
-        onEmergency={handleEmergency}
-        onVoiceSearch={handleVoiceSearch}
-        onAIChat={handleAIChat}
-      />
+    <div className="min-h-screen bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 font-sans selection:bg-blue-500 selection:text-white transition-colors">
+      
+      {/* Sticky Glassmorphic Navbar */}
+      <Navbar onContactClick={() => setShowContactModal(true)} />
 
-      {/* AI Chatbot Modal */}
+      {/* Main SaaS Sections */}
+      <main>
+        {/* 1. Hero Section */}
+        <HeroSection 
+          onAIChat={() => setShowChatbot(true)}
+          onVoiceSearch={() => setShowVoiceSearch(true)}
+          onEmergency={handleEmergency}
+        />
+
+        {/* 2. Popular Services Grid */}
+        <PopularServicesSection />
+
+        {/* 3. How It Works - 4 Horizontal Step Cards */}
+        <HowItWorksSection />
+
+        {/* 4. Key Metrics & Statistics */}
+        <StatisticsSection />
+
+        {/* 5. Why Choose Us Features */}
+        <WhyChooseUsSection />
+
+        {/* 6. Customer Testimonials */}
+        <TestimonialsSection />
+
+        {/* 7. Mobile App Mockup Section */}
+        <MobileAppSection />
+
+        {/* 8. Accordion FAQ Section */}
+        <FAQSection />
+      </main>
+
+      {/* Footer */}
+      <FooterSection />
+
+      {/* Floating Emergency SOS Button */}
+      <EmergencyButton onClick={handleEmergency} />
+
+      {/* Interactive Modals */}
       {showChatbot && (
         <AIChatbot 
           isOpen={showChatbot}
@@ -87,7 +114,6 @@ const Home = () => {
         />
       )}
 
-      {/* Voice Search Modal */}
       {showVoiceSearch && (
         <VoiceSearch 
           isOpen={showVoiceSearch}
@@ -95,40 +121,13 @@ const Home = () => {
         />
       )}
 
-      {/* Service Categories */}
-      <ServiceCategories />
+      <ContactModal 
+        isOpen={showContactModal}
+        onClose={() => setShowContactModal(false)}
+      />
 
-      {/* How It Works */}
-      <HowItWorks />
-
-      {/* Unique Features */}
-      <Features />
-
-      {/* Real-time Tracking Demo */}
-      <RealTimeTracking />
-
-      {/* Gamification */}
-      <Gamification />
-
-      {/* Community Section */}
-      <CommunitySection />
-
-      {/* Stats */}
-      <Stats />
-
-      {/* Pricing */}
-      <Pricing />
-
-      {/* Testimonials */}
-      <Testimonials />
-
-      {/* Emergency Button - Floating */}
-      <EmergencyButton onClick={handleEmergency} />
     </div>
   );
 };
 
 export default Home;
-
-
-
