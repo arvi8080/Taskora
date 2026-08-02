@@ -4,7 +4,6 @@ import { useAuth } from '../contexts/AuthContext';
 import { useSocket } from '../contexts/SocketContext';
 
 // SaaS Landing Page Components
-import Navbar from '../components/Landing/Navbar';
 import HeroSection from '../components/Landing/HeroSection';
 import PopularServicesSection from '../components/Landing/PopularServicesSection';
 import HowItWorksSection from '../components/Landing/HowItWorksSection';
@@ -66,9 +65,6 @@ const Home = () => {
   return (
     <div className="min-h-screen bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 font-sans selection:bg-blue-500 selection:text-white transition-colors">
       
-      {/* Sticky Glassmorphic Navbar */}
-      <Navbar onContactClick={() => setShowContactModal(true)} />
-
       {/* Main SaaS Sections */}
       <main>
         {/* 1. Hero Section */}

@@ -78,8 +78,11 @@ const Navbar = ({ onContactClick }) => {
               </a>
             ))}
             <button
-              onClick={onContactClick}
-              className="text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+              onClick={onContactClick || (() => {
+                const target = document.querySelector('#faq');
+                if (target) target.scrollIntoView({ behavior: 'smooth' });
+              })}
+              className="text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors cursor-pointer"
             >
               Contact
             </button>
@@ -173,7 +176,12 @@ const Navbar = ({ onContactClick }) => {
             <button
               onClick={() => {
                 setMobileMenuOpen(false);
-                onContactClick();
+                if (onContactClick) {
+                  onContactClick();
+                } else {
+                  const target = document.querySelector('#faq');
+                  if (target) target.scrollIntoView({ behavior: 'smooth' });
+                }
               }}
               className="w-full text-left px-3 py-2.5 rounded-lg text-base font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
             >
