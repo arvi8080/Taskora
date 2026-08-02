@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { communityAPI } from '../../services/api';
-import toast from 'react-hot-toast';
 
 const CommunitySection = () => {
   const [opportunities, setOpportunities] = useState([]);
